@@ -1,0 +1,1 @@
+alert("Teste do scriptjs externo js Texto");

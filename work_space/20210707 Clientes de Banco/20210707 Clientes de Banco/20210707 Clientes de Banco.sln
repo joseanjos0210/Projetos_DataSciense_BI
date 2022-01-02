@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1525
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "20210707 Clientes de Banco", "20210707 Clientes de Banco\20210707 Clientes de Banco.dtproj", "{59534F81-54CD-43B1-BDCD-245FDCF07D4B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59534F81-54CD-43B1-BDCD-245FDCF07D4B}.Development|Default.ActiveCfg = Development
+		{59534F81-54CD-43B1-BDCD-245FDCF07D4B}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E57C7DED-A099-4A55-9B56-7E9997DA6A44}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,753 @@
+
+****************************************************************************
+****************************************************************************
+******   STEP - 0001- PREPARAÇÃO ARQUIVO E CRIAÇÃO DA TABELA RAW (DADOS CRU)
+****************************************************************************
+****************************************************************************
+
+
+	### ATENÇÃO  QUANDO FORMATAR PLANILHA ###
+	FORMATAR COLUNA VALOR ---->> COMO NUMERO  SEM CASA DECIMAL
+	
+	REGIAO -> FORMATO ADCIONAL ->  		MUDAR [,] PARA   [.]  
+										MUDAR SEPARADOR  [;] PARA  [,]
+	FORMATAR DATA COMO PERSONALIZADO  	NO FORMATO DATA  YYYY-MM-DD 
+	FORMATAR VALOR FORMATANDO COMO NUMERO NÃO VALOR SEM [,]
+
+
+Componentes:  ETL - ClientesBanco.csv
+*************************************
+
+Configurando outras origens- arquivo Flat File Source:
+******************************************************
+
+-> Na caixa de ferramentas do SSIS -> duplo click  Data flow task ira  cria o respectivo icone
+-> Duplo click no icone Data flow Task  criado ira  direcionar para Fluxo de Dados
+-> Ir com explorer  ate area de upload na pasta correspondente do dia da carga e copiar endereço completo
+-> No ico Flat File Source, dar um duplo click no mesmo -> dar  click no botao NOVO
+-> No item nome  do arquivo, cole  o  caminho  -> click em procura ->selecione  o tipo de arquivo CSV desejado;
+-> Coloque na parte superio  Nome do gerenciador de conexões o nome completo do arquivo .csv
+-> Click na configure as propriedas de cada coluna da primeira  a ultima  e  configure OutputColumn 1000 <enter>
+-> click botao OK  e  botao OK novamente.
+-> Va ate aba gerenciadores de conexao e click  na conexão criada xxxxxxxxx.csv
+-> Va a coluna descrição  visualização e  analise criteriosamente  todas as linhas
+e  colunas se não existe branco caso exista o arquivo esta com erro
+
+
+
+Criando a BASE DE DADOS na ferramenta Microsoft SQL Server Management
+*********************************************************************
+  
+ -> Apos acessar  com usuario sa  e a respectiva senha
+ -> Click na base de dados desejada com botao direito newquery
+ -> digite  CREATE DATABASE TEST_TREINAMENTO
+ -> digite  GO   selecione o digitado na tela newquery  e  !execute
+
+
+
+Configurando Outros Destinos --> Ole DB Destino
+***********************************************
+
+-> Na parte inferior da tela Gerenciadores de Conexões -> click com botao dir do mouse 
+-> Duplo click OLE DB Destination
+-> Va ate aba Gerenciadores de conexões, com botao direito  click em Nova conexão OLE DB 
+-> Nome do servidor [.] ou [localhost] ou 127.0.0.1
+-> Em Autenticação no servidor sempre Autenticação do SQL Server sempre utilize  sa  e a respectiva senha
+-> Na opção Conectar a um banco de dados  Selecionar o  banco de dados desejado
+-> Click no botão testar a conexão
+-> Conectar os icone no Dsata Flow Flat File Source  ao OLE DB Destination com a seta azul
+-> click no icone OLE DB Destination e  na opção Nome da tabela ou exibição  click no botão nova
+
+-> CREATE TABLE [RAW_ClientesBanco_20210705] (
+                 ***************************  ---> informe o nome da tabela conforme ****
+    [IdCliente]  int identity(1,1),
+    ******************************            ---> copiar e colar toda linha acima {IdCliente]
+    [Customer ID] varchar(1000),
+    [Name] varchar(1000),
+    [Surname] varchar(1000),
+    [Gender] varchar(1000),
+    [Age] varchar(1000),
+    [Date Joined] varchar(1000),
+    [Balance] varchar(1000)
+)
+
+-> Dar um click no botão ok e botao ok novamente e sera criado a nova tabela;
+-> click no icone Ole DB Destination va em Mapeamento e  verifique os links estao todos ok e click  botão OK
+-> Va no quadro a direita superior Gerenciador de soluções -> Pacotes SSIS -> renomeie o package.dtsx
+com o nome da tabela gerada com 01-Clientes Banco_20211018
+-> Botão direito no pacote e execute -> apos sucesso na execução -> ir ate o botão de stop e click
+
+
+Validando a criação da tabela com dados com a ferramenta Microsoft SQL Server Management
+****************************************************************************************
+
+-> Va ate a base de dados desejada -> tables -> selecione a tabela criada ->  selecione com botao direito
+select top 1000 row e sera exibido o import do arquivo de carga desejado
+ 
+  
+Dando carga  de outros arquivos no mesmo banco de  dados  e mesma tabela:
+*************************************************************************
+
+*** PONTO IMPORTANTE  VALIDE SE A CARGA SERA NA MESMA TABELA CRIADA COM O NOME DO PRIMEIRO ARQUIVO DE CARGA ****
+
+-> Va ate aba de gerenciador de soluções -> Pacotes SSIS -> botão direito -> novo pacote -> renomeie o novo pacote com
+o nome do novo arquivo a ser dado cargar;
+-> Va na aba central  Fluxo de  Controle  e do ultimo arquivo de carga efetuado  e copie o ultimo Data Flox Task e renomeie
+o nome do arquivo correspondente  e no ico do que foi copiado o nome do novo arquivo de carga;
+-> Va na Aba Gerenciadores de Conexão abaixo, no primeiro arquivo que correponde a origen da carga de dados
+click com botao direito e  Editar  altere Nome do gerenciador de conexões com o nome do arquivo desejado novo de carga
+-> No botao procurar localize o arquivo que voce deseja dar a carga.
+-> """ATENÇÃO IMPORTANTE"" Não esqueça de dabilitar com botaõ direito o ico da cargas anterior 
+ai execute o arquivo de carga desejado
+
+ 
+exemplos de alguns  comando no SQL
+**********************************
+
+    select count(*) from [dbo].[RAW_Clientes Banco_20211018]
+
+    delete from [dbo].[RAW_ClientesBanco_20210705]            /// CUIDADO COM ESTE COMANDO QUE IRA APAGAR O CONTEUDO DA TABELA
+
+
+	/// FORMAS DE  IDENTIFICAR ANAOMALIAS CONFORME A REGRAS DE NEGOCIO [SEÇÃO 7 ] AULA [43] Null, And e Or:
+	*******************************************************************************************************
+	
+	SELECT *
+		FROM [TEST_TREINAMENTO].[dbo].[RAW_ClientesAfrica_20211023]
+		WHERE [Coluna 46] NOT LIKE ''						 /// CONDIÇÃO  COLUNA 45  ESTEJE FAZIA
+		OR  [Longitude] NOT LIKE '%.%'						 /// OR  CONDIÇÃO COLUNA LOGITUDE  FUJA DO FORMATO PADRÃO '%.%'
+		
+	SELECT *
+       FROM [TEST_TREINAMENTO].[dbo].[RAW_ClientesAfrica_20211023]
+	   WHERE [Coluna 46] IS NULL OR [Longitude] IS NULL		/// VERIFICANDO VALOR NULL  [VAZIO] NAS RESPECTIVAS COLUNAS
+	   
+	TRUNCATE TABLE [TEST_TREINAMENTO].[dbo].[RAW_ClientesAfrica_20211023]   /// TRUCANTE para zerar o identy id 
+	e recomeça apos o processamento 1 [ SEÇÃO 7 ] AULA [45]
+	   
+
+Dicas para que seja criado um pacote para execução por qualquer usuario siga os passos abaixo:
+********************************************************************************************** 
+  
+  1- Va a exibir , propriedades [f4]  defina a  criação do pacote com senha do usuario
+  2- coloque a  senha  no respectivo pacote 
+  
+  detalhe  assista aula Seção 6 Infra estrutura e segurança  aula  --[35} Protegendo pacotes com criptografia
+                                                          validação -{36} Pacotes de Carga Multiusuario
+														  
+
+
+
+Seção 7 ->  Aula 38. Tratando arquivo CSV - O formato universal:
+****************************************************************
+
+criterios de checagem sempre [ 1- datas ] ,  [ 2- valores ]  e [ 3- checagem  de  textos ]
+*******************************************************************************************
+
+1- Painel de Controle -> File Explorer Options -> View -> [desabilita] a opção  Hide extensions for known files types
+2- Renomei o arquivo  de carga que esta com [.csv]  para  [.txt]
+3- Abra o Excel,  va na opção abrir  e localize o arquivo de carga no formato [.txt] -> Delimitado -> [,] -> Qualificador ["]
+-> No quadro abaixo Visualização dos dados,  click na primeira coluna segurando a tecla [ shift ]  e va ate a ultima coluna  deve esta totalmente marcado
+-> [ concluir ]
+4- Apos import do arquivo de carga ->  validar  os formato de data se esta correta -> primeira e ultima coluna  e  linha integridade total do arquivo.
+5- Campo que contenha Data click sobre  a coluna va  na opção excel de DADOS -> Texto para Colunas -> deixa a opção Delimitado -> avançar  retire  nos 
+demilitador o que tiver marcado -> avance  marque  o campo data  e selecione o formato desejado [ MDA ] => click em concluir
+6- Retornar ao arquivo ir na coluna de data  conver para o formato internacional  YYYY-MM-DD
+7- Campo que contenha Valor click sobre  a coluna valor  na opção excel de DADOS -> Texto para Colunas -> deixa a opção Delimitado -> avançar  retire  nos 
+demilitador o que tiver marcado -> avance  marque  o campo Geral => click em concluir 
+6- Retornar ao arquivo ir na coluna de valor conver para o formato numero sem usar separador [,]  seleceione -1234.10 valor negativo
+8- Campo que contenha Historico [ feedback ] click sobre  a coluna especifica va  na opção excel de DADOS -> Texto para Colunas -> deixa a opção Delimitado -> avançar  retire  nos 
+demilitador o que tiver marcado -> avance  marque  o campo Geral => click em concluir 
+9- Para concluir  no Excel va na opção salva como ->  utilize sempre  a opção CSV (separado por  virdulas) (*.csv)
+
+PONTO IMPORTANTE: ->Na ferramenta SSIS  na aba inferior de Gerenciados de Conexões no conector de de origem entre modo editar
+OLE DB Destination não esqueça de  colocar {"} no qualificador de texto
+[ SEÇÃO 7 ] AULAS  [37], ATE [48]
+
+
+
+
+
+
+****************************************************************************
+****************************************************************************
+******   STEP - 0002- CRIAÇÃO TABELA WRK
+****************************************************************************
+****************************************************************************
+
+
+
+CONVERÇÃO EXPLICITA  EM SQL: -> Utilizando a função CAST
+*********************************************************
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+SELECT TOP (1000) [Order ID]
+      ,[Order Date]
+      ,[Customer ID]
+      ,[Region]
+      ,[Rep]
+      ,[Item]
+      ,[Units]
+      ,[Unit Price]
+  FROM [TEST_TREINAMENTO].[dbo].[RAW_Transacoes_20211024]
+
+// UTILIZANDO  A MESMA SITUAÇÃO COM A FUNÇÃO CAST
+****************************************************
+
+  SELECT * FROM [dbo].[RAW_Transacoes_20211024]
+  ORDER BY CAST([Unit Price] AS FLOAT)
+  GO
+  
+// UTILIZANDO  A MESMA SITUAÇÃO COM A FUNÇÃO CAST
+****************************************************
+
+  SELECT * FROM [dbo].[RAW_Transacoes_20211024]
+  ORDER BY CONVERT( FLOAT, [Unit Price] )
+  GO
+  
+
+
+--=============================================
+-- TEMPLATE PARA CRIAÇÃO PARA UMA TABELA  WRK
+--=============================================
+
+USE [TEST_TREINAMENTO]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- ===================================================
+-- Author:		JOSE ANTONIO DOS ANJOS
+-- Create date: 20210111
+-- Description:	PROCEDURE QUE CRIA A TAB WRK_CLIENTES
+-- ====================================================
+
+ALTER PROCEDURE [dbo].[SP_WRK_CLIENTES]
+	
+AS
+BEGIN
+
+--================================================
+-- DROP TABLE
+--================================================
+
+IF OBJECT_ID('WRK_CLIENTES') IS NOT NULL
+DROP TABLE [dbo].[WRK_CLIENTES]
+
+
+--================================================
+-- CRIAÇÃO DA TABELA 
+--================================================
+	
+CREATE TABLE WRK_CLIENTES
+(
+	   [RowNumber]			INT IDENTITY
+	  ,[Customer ID]		VARCHAR(100)
+      ,[City]				VARCHAR(100)
+      ,[ZipCode]			VARCHAR(10)
+      ,[Gender]				CHAR(1)
+      ,[Age]				FLOAT
+)
+
+--==============================================
+-- TRUCANTE DA TABELA
+--==============================================
+
+TRUNCATE TABLE [dbo].[WRK_CLIENTES]
+
+-- =============================================
+-- va ate a tabela  dbo.RAW_Clientes_20211024 -> Select top 1000 rows
+-- =============================================    
+
+INSERT INTO [dbo].[WRK_CLIENTES]
+(           [Customer ID]
+           ,[City]
+           ,[ZipCode]
+           ,[Gender]
+           ,[Age]
+)
+
+SELECT                                  -- ###  retire o TOP (1000) 
+       [Customer ID]
+      ,[City]
+      ,[ZipCode]
+      ,[Gender]
+      ,[Age]
+  FROM [TEST_TREINAMENTO].[dbo].[RAW_Clientes_20211024]
+
+END
+GO
+
+-- =============================================
+-- (43 row(s) affected)
+-- =============================================
+
+
+
+
+PARA  EXECUTAR UMA PROCEDURE  ABRA  NEW QUERY  E EXECUTE 
+********************************************************
+
+SP_WRK_CLIENTES
+
+
+
+AJUSTE DAS TABELA  QUE  NECESSITAM  DE ALTERAÇÃO [CUSTOMER_id] E POSTERIORMENTE A CRIAÇÃO JOIN = TABELAS DERIVADAS
+*******************************************************************************************************************
+AJUSTES  DAS  PROCEDURES  CLIENTES ABAIXO VIDE CAMPO [CUSTOMER_ID]:
+******************************************************************
+
+
+
+USE [TEST_TREINAMENTO]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_WRK_CLIENTES]    Script Date: 2021-11-01 4:30:21 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		JOSE ANTONIO DOS ANJOS
+-- Create date: 20210111
+-- Description:	PROCEDURE QUE CRIA A TAB WRK_CLIENTES
+-- =============================================
+
+ALTER PROCEDURE [dbo].[SP_WRK_CLIENTES]
+	
+AS
+BEGIN
+
+--================================================
+-- DROP TABLE
+--================================================
+
+IF OBJECT_ID('WRK_CLIENTES') IS NOT NULL
+DROP TABLE [dbo].[WRK_CLIENTES]
+
+
+--================================================
+-- CRIAÇÃO DA TABELA 
+--================================================
+	
+CREATE TABLE WRK_CLIENTES
+(
+	   [RowNumber]			INT IDENTITY
+	  ,[Customer ID]		VARCHAR(100)
+      ,[City]				VARCHAR(100)
+      ,[ZipCode]			VARCHAR(10)
+      ,[Gender]				CHAR(1)
+      ,[Age]				FLOAT
+)
+
+--==============================================
+-- TRUCANTE DA TABELA
+--==============================================
+
+TRUNCATE TABLE [dbo].[WRK_CLIENTES]
+
+-- =============================================
+-- va ate a tabela  dbo.RAW_Clientes_20211024 -> Select top 1000 rows
+-- =============================================    
+
+INSERT INTO [dbo].[WRK_CLIENTES]
+(           [Customer ID]
+           ,[City]
+           ,[ZipCode]
+           ,[Gender]
+           ,[Age]
+)
+
+SELECT                                  -- ###  retire o TOP (1000) 
+       RIGHT('0000000' +[Customer ID],7)
+      ,[City]
+      ,[ZipCode]
+      ,[Gender]
+      ,[Age]
+  FROM [TEST_TREINAMENTO].[dbo].[RAW_Clientes_20211024]
+
+END
+
+
+
+
+AJUSTES NA PROCEDURE  TRANSACOES  ABAIXO VIDE CAMPO [CUSTOMER_ID]:
+******************************************************************
+
+
+
+USE [TEST_TREINAMENTO]
+GO
+/****** Object:  StoredProcedure [dbo].[SP_WRK_TRANSACOES]    Script Date: 2021-11-01 4:31:35 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- ===================================================
+-- Author:		JOSE ANTONIO DOS ANJOS
+-- Create date: 20210111
+-- Description:	PROCEDURE QUE CRIA A TAB WRK_TRANSACOES
+-- ====================================================
+
+ALTER PROCEDURE [dbo].[SP_WRK_TRANSACOES]
+	
+AS
+BEGIN
+
+--================================================
+-- DROP TABLE
+--================================================
+
+IF OBJECT_ID('WRK_TRANSACOES') IS NOT NULL
+DROP TABLE [dbo].[WRK_TRANSACOES]
+
+
+--================================================
+-- CRIAÇÃO DA TABELA 
+--================================================
+	
+CREATE TABLE WRK_TRANSACOES
+(
+	     [RowNumber]		INT IDENTITY
+        ,[Order ID]			VARCHAR(100)
+		,[Order Date]		DATE
+		,[Customer ID]		VARCHAR(100)                                    -- ALTERREI AQUI DE NUMERIC PARA VARCHAR(100)
+		,[Region]			VARCHAR(100)
+		,[Rep]				VARCHAR(100)
+		,[Item]				VARCHAR(100)
+		,[Units]			NUMERIC
+		,[Unit Price]		FLOAT
+)
+
+--==============================================
+-- TRUCANTE DA TABELA
+--==============================================
+
+TRUNCATE TABLE [dbo].[WRK_TRANSACOES]
+
+-- =============================================
+-- va ate a tabela  dbo.RAW_Clientes_20211024 -> Select top 1000 rows
+-- =============================================    
+
+INSERT INTO [dbo].[WRK_TRANSACOES]
+(            [Order ID]
+			,[Order Date]
+			,[Customer ID]
+			,[Region]
+			,[Rep]
+			,[Item]
+			,[Units]
+			,[Unit Price]
+)
+
+SELECT 
+	   [Order ID]
+      ,[Order Date]
+      ,RIGHT('0000000' + [Customer ID],7)
+      ,[Region]
+      ,[Rep]
+      ,[Item]
+      ,[Units]
+      ,[Unit Price]
+  FROM [TEST_TREINAMENTO].[dbo].[RAW_Transacoes_20211024]
+
+END
+
+
+
+VALIDAÇÃO DA ATIVIDADE:
+***********************
+
+
+obs. execute cada  procedure abaixo uma por uma de cada vez 
+***********************************************************
+
+[dbo].[SP_WRK_CLIENTES]
+
+[dbo].[SP_WRK_TRANSACOES]
+
+
+
+EXECUÇÃO DOS SELECTS PARA VALIDAÇÕES APOS EXECUÇÕES  DAS  PROCEDURES :
+*********************************************************************
+
+SELECT * FROM [dbo].[WRK_CLIENTES]
+
+SELECT * FROM [dbo].[WRK_TRANSACOES]
+
+SELECT * FROM [dbo].[RAW_Transacoes_20211024]
+
+
+
+CRIANDO TABELAS DERIVADAS OU SEJA JOIN 
+**************************************
+
+PRIMEIRO DENTRO DO BANCO DE DADOS TREINAMENTO  VA EM VIEWS  -> NEW VIEW -> IRA APARECER UMA 
+QUADRO AO LADO E SELECIONE AS TABELAS QUE IREMOS FAZER JOIN  WRK_CLIENTES  E  WRK_TRANSACOES
+PRECIONANDO A TECLA SHIFT  E SELECIONANDO AMBAS AS TABELAS  E CLICK ADD E CLOSE 
+
+SEGUNDO SELECIONE CUSTOMER_ID DO PRIMEIRO QUADRO  ARRASTE ATE CUSTOMER_ID DO SEGUNDO QUADRO
+SELECIONE OS DEMAIS CAMPOS  DESEJADO DO PRIMEIRO QUADRO  E  DO SEGUNDO QUADRO VIDE O SELECT ABAIXO:
+
+
+
+COPIE O SELECT GERADO CONFORME  DESCRITO ABAIXO:
+************************************************
+
+SELECT        WRK_CLIENTES.[Customer ID], WRK_CLIENTES.City, WRK_CLIENTES.ZipCode, WRK_CLIENTES.Gender, WRK_CLIENTES.Age, WRK_TRANSACOES.[Order ID], WRK_TRANSACOES.[Order Date], WRK_TRANSACOES.Region, 
+                         WRK_TRANSACOES.Units, WRK_TRANSACOES.Item, WRK_TRANSACOES.Rep, WRK_TRANSACOES.[Unit Price]
+FROM            WRK_CLIENTES INNER JOIN
+                         WRK_TRANSACOES ON WRK_CLIENTES.[Customer ID] = WRK_TRANSACOES.[Customer ID]
+
+
+
+
+
+CRIEI UMA NEW QUERY E COLE  O SELECTS ACIMA FAÇA A IDENTAÇÃO CONFORME ABAIXO:
+*****************************************************************************
+
+SELECT        
+	WRK_CLIENTES.[Customer ID], 
+	WRK_CLIENTES.City, 
+	WRK_CLIENTES.ZipCode, 
+	WRK_CLIENTES.Gender, 
+	WRK_CLIENTES.Age, 
+	WRK_TRANSACOES.[Order ID], 
+	WRK_TRANSACOES.[Order Date], 
+	WRK_TRANSACOES.Region,
+	WRK_TRANSACOES.Units, 
+	WRK_TRANSACOES.Item, 
+	WRK_TRANSACOES.Rep, 
+	WRK_TRANSACOES.[Unit Price]
+FROM            
+WRK_CLIENTES INNER JOIN WRK_TRANSACOES ON WRK_CLIENTES.[Customer ID] = WRK_TRANSACOES.[Customer ID]
+
+
+
+
+ALTERE CONFORME STEP BY STEP ABAIXO  A CRIAÇÃO DA TABELA CONFORME  ABAIXO:
+**************************************************************************
+
+1- CRIEI UMA NOVA PROCEDURE 
+
+2- COPIE  A PROCEDURE  CLIENTES  E  ABRA NEW PROCEDURE
+
+3- ALTERE TUDO QUE  ESTIVER WRK_CLIENTES PARA  DRV_CLIENTESTRANSACOES
+
+4- ALTERE -> CREATE PROCEDURE [dbo].[DRV_CLIENTESTRANSACOES]
+
+5- EXECUTE AS ALTERAÇÕES ATE O FINAL DA PROCEDURE
+
+6- COLE O SELECT DO JOIN  APOS  [RowNumber]	INT IDENTITY, E FAÇA OS AJUSTE CONFORME ABAIXO
+PRECIONE A TECLA ALT ATE LOCAL DESEJADO E PAGUE ATE FICAR COMO ABAIXO, 
+
+7- FAÇA PARA AMBAS  A TABELA WRK_CLIENTES  E  WRK_TRANSACOES VA ATE COLUMNS E IDENTIFIQUE
+AO LADO DE CADA  CAMPO COMO  FOI CRIADO VIDE ABAIXO.
+
+--================================================
+-- CRIAÇÃO DA TABELA 
+--================================================
+	
+CREATE TABLE DRV_CLIENTESTRANSACOES
+(
+	    [RowNumber]			INT IDENTITY,
+	  	[Customer ID]		VARCHAR(100), 
+		City				VARCHAR(100), 
+		ZipCode				VARCHAR(10), 
+		Gender				CHAR(1), 
+		Age					FLOAT, 
+		[Order ID]			VARCHAR(100), 
+		[Order Date]		DATE, 
+		Region				VARCHAR(100),
+		Units				NUMERIC, 
+		Item				VARCHAR(100), 
+		Rep					VARCHAR(100), 
+		[Unit Price]		FLOAT
+)
+
+8- NO FINAL DA PROCEDURO  EXISTE INSERT INTO SUBSTITUA APENAS A PARTE DO 
+SELECT  CONFORME  ABAIXO:
+
+
+SUBSTITUE O SELECT  ABAIXO:
+**************************
+
+SELECT                                  -- ###  retire o TOP (1000) 
+       RIGHT('0000000' +[Customer ID],7)
+      ,[City]
+      ,[ZipCode]
+      ,[Gender]
+      ,[Age]
+  FROM [TEST_TREINAMENTO].[dbo].[RAW_Clientes_20211024]
+
+
+
+
+POR  OS SELECT ABAIXO :
+***********************
+
+SELECT        
+	WRK_CLIENTES.[Customer ID], 
+	WRK_CLIENTES.City, 
+	WRK_CLIENTES.ZipCode, 
+	WRK_CLIENTES.Gender, 
+	WRK_CLIENTES.Age, 
+	WRK_TRANSACOES.[Order ID], 
+	WRK_TRANSACOES.[Order Date], 
+	WRK_TRANSACOES.Region,
+	WRK_TRANSACOES.Units, 
+	WRK_TRANSACOES.Item, 
+	WRK_TRANSACOES.Rep, 
+	WRK_TRANSACOES.[Unit Price]
+FROM            
+WRK_CLIENTES INNER JOIN WRK_TRANSACOES ON WRK_CLIENTES.[Customer ID] = WRK_TRANSACOES.[Customer ID]
+
+
+
+
+9-  COPIE  DA  TODA  SEGUENCIA QUE ESTA --> CREATE TABLE DRV_CLIENTESTRANSACOES -> E COLE
+
+
+	    [RowNumber]			INT IDENTITY,
+	  	[Customer ID]		VARCHAR(100), 
+		City				VARCHAR(100), 
+		ZipCode				VARCHAR(10), 
+		Gender				CHAR(1), 
+		Age					FLOAT, 
+		[Order ID]			VARCHAR(100), 
+		[Order Date]		DATE, 
+		Region				VARCHAR(100),
+		Units				NUMERIC, 
+		Item				VARCHAR(100), 
+		Rep					VARCHAR(100), 
+		[Unit Price]		FLOAT 
+
+
+
+10 - DEIXE  O -> INSERT INTO [dbo].[DRV_CLIENTESTRANSACOES]  CONFORME ABAIXO:
+		
+	INSERT INTO [dbo].[DRV_CLIENTESTRANSACOES]
+(           	    
+		                                  -- RETIRE [RowNumber]			
+	  	[Customer ID],		
+		City,				
+		ZipCode,				
+		Gender,				
+		Age,					
+		[Order ID],			
+		[Order Date],		
+		Region,				
+		Units,				
+		Item,				
+		Rep,					
+		[Unit Price]		
+)
+		
+
+
+SEGUE ABAIXO O JOIN COM  A PROCEDURE SP_DRV_CLIENTESTRANSACOES:
+***************************************************************		
+
+/****** Object:  StoredProcedure [dbo].[SP_DRV_CLIENTESTRANSACOES]    Script Date: 2021-11-01 6:17:34 PM ******/
+USE [TEST_TREINAMENTO]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:		JOSE ANTONIO DOS ANJOS
+-- Create date: 20210111
+-- Description:	PROCEDURE QUE CRIA A TAB SP_DRV_CLIENTESTRANSACOES
+-- ===============================================================
+
+ALTER PROCEDURE [dbo].[SP_DRV_CLIENTESTRANSACOES]
+	
+AS
+BEGIN
+
+--================================================
+-- DROP TABLE
+--================================================
+
+IF OBJECT_ID('DRV_CLIENTESTRANSACOES') IS NOT NULL
+DROP TABLE [dbo].[DRV_CLIENTESTRANSACOES]
+
+
+--================================================
+-- CRIAÇÃO DA TABELA 
+--================================================
+	
+CREATE TABLE DRV_CLIENTESTRANSACOES
+(
+	    [RowNumber]			INT IDENTITY,
+	  	[Customer ID]		VARCHAR(100), 
+		City				VARCHAR(100), 
+		ZipCode				VARCHAR(10), 
+		Gender				CHAR(1), 
+		Age					FLOAT, 
+		[Order ID]			VARCHAR(100), 
+		[Order Date]		DATE, 
+		Region				VARCHAR(100),
+		Units				NUMERIC, 
+		Item				VARCHAR(100), 
+		Rep					VARCHAR(100), 
+		[Unit Price]		FLOAT
+)
+
+--==============================================
+-- TRUCANTE DA TABELA
+--==============================================
+
+TRUNCATE TABLE [dbo].[DRV_CLIENTESTRANSACOES]
+
+-- =============================================
+-- va ate a tabela  dbo.RAW_Clientes_20211024 -> Select top 1000 rows
+-- =============================================    
+
+INSERT INTO [dbo].[DRV_CLIENTESTRANSACOES]
+(           	    
+		                                  -- RETIRE [RowNumber]			
+	  	[Customer ID],		
+		City,				
+		ZipCode,				
+		Gender,				
+		Age,					
+		[Order ID],			
+		[Order Date],		
+		Region,				
+		Units,				
+		Item,				
+		Rep,					
+		[Unit Price]		
+)
+
+SELECT        
+	WRK_CLIENTES.[Customer ID], 
+	WRK_CLIENTES.City, 
+	WRK_CLIENTES.ZipCode, 
+	WRK_CLIENTES.Gender, 
+	WRK_CLIENTES.Age, 
+	WRK_TRANSACOES.[Order ID], 
+	WRK_TRANSACOES.[Order Date], 
+	WRK_TRANSACOES.Region,
+	WRK_TRANSACOES.Units, 
+	WRK_TRANSACOES.Item, 
+	WRK_TRANSACOES.Rep, 
+	WRK_TRANSACOES.[Unit Price]
+FROM            
+WRK_CLIENTES INNER JOIN WRK_TRANSACOES ON WRK_CLIENTES.[Customer ID] = WRK_TRANSACOES.[Customer ID]
+
+END
+
+***************************************************************************************		
+SEGUE  O TOPICO  TOP DE  VERSIONAMENTO DE  DADOS  COMO E MUITO COMPLETO  
+ASSISTIR AS AULAS   QUE ESTA DRIVE [D] O APOIO DE CURSOS  
+PASTA -->	66. Executando o Pacote de Atualização Versionada { datasciense}	
+****************************************************************************************
+		

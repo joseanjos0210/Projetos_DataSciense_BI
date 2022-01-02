@@ -1,0 +1,864 @@
+=======================================================================================
+## DICAS PYTHON
+=======================================================================================
+
+
+jupyter notebook
+
+
+sudo apt install openssh-server -y
+sudo apt install nano -y
+sudo apt install net-tools -y
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install curl -y
+sudo apt install git -y
+
+sudo apt install python3.8 python3.8-dev python3.8-venv \
+  python3-venv idle-python3.8 python3-pip virtualenv gcc \
+  default-libmysqlclient-dev libssl-dev -y
+
+sudo snap install pycharm-community --classic
+
+=======================================================================================
+## EXECUÇÕES DAS AULAS  PYTHON
+=======================================================================================
+
+
+# aula1_print.py
+# isso e um comentário
+
+print ('linha 1')
+print ('linha 2')
+# falando do que trata esta linha de código
+print ('linha 3')
+print ('linha 4')  # comentando esta linha
+print ('linha 5')
+
+print (' Primeiro teste de Python')
+print (' e muito interessante e vou me esforçar para aprender')
+
+RESULTADO=>
+
+linha 1
+linha 2
+linha 3
+linha 4
+linha 5
+ Primeiro teste de Python
+ e muito interessante e vou me esforçar para aprender
+ 
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+ 
+=======================================================================================
+
+
+
+# aula2_conversao_print.py"
+aula2_conversao_print.py
+# exercicio utilizando separador no print()
+# 824.176.070-18
+
+print('824', '176', '070', sep='.', end='-')
+print('18')
+
+print('Estou', 'aprendendo', 'Python', sep='-', end=' ')
+print('isso é muito', 'legal', sep='-', end='')
+
+RESULTADO=>
+
+824.176.070-18
+Estou-aprendendo-Python isso é muito-legal
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+
+aula3_strings_print.py
+# str -> string
+
+print("Essa é uma 'string' (str).")
+print('Essa é uma "string" (str).')
+print("Esse é meu \"texto\" (str).")
+print('Esse é meu \'texto\' (str).')
+print('Esse é meu \n "texto\" (str).')   # \n e quebra de  linha no print()
+
+RESULTADO=>
+
+Essa é uma 'string' (str).
+Essa é uma "string" (str).
+Esse é meu "texto" (str).
+Esse é meu 'texto' (str).
+Esse é meu 
+ "texto" (str).
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+
+aula4_dados_primitivos.py
+# Tipos de dados
+# =========================================================
+# str - string                  => texto
+# int - inteiro                 => 123456 0  -60 -12345
+# float - real/ponto flutuante  =>  10.50  1.5 -10.10  -50.93
+# bool - booleano/lógico        =>  True  False
+
+print('Luis', type('Luiz'))
+
+print(123456, type(123456))
+
+print(10.50, type(10.50))
+
+print(10 == 10, type(10 == 10))
+
+print('L' == 'L', type('l' == 'l'))
+
+# exercicio de fixação:
+
+print('José Antonio dos Anjos', type('José Antonio dos Anjos'))     # string seu nome
+
+print(59, type(59))                                                 # sua idade : int
+
+print(1.89, type(1.89))                                             # sua altura : float
+
+print(59 > 18, type(59 > 18))                                       # è maior de idade 18 > 10
+
+RESULTADO =>
+
+Luis <class 'str'>
+123456 <class 'int'>
+10.5 <class 'float'>
+True <class 'bool'>
+True <class 'bool'>
+José Antonio dos Anjos <class 'str'>
+59 <class 'int'>
+1.89 <class 'float'>
+True <class 'bool'>
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+# aula5_op_aritmetricos.py
+# Operadores aritmeticos:
+
+print('Multiplicação *  ', 10 * 10)
+print('Adição +  ', 10 + 10)
+print('Subtração -  ', 10 - 5)
+print('Divisão / '  , 10 / 2)
+print('Divisão inteira retorna numero inteiro //  ', 99 // 5)
+print('Exponenciação **  ', 2 ** 10)
+print('Modulo - obtendo o resto da divisão  %  ', 10 % 3)
+print('Alterar a presendencia  ', 5+2*10)
+print('Alterar a presendencia  ', (5+2)*10)
+
+print ('Utilizando  +  para concatenar strings ->  ', "Texto" + " correto")
+print ('Utilizando  *  para repetir a exibição strings ou numero inteiro ->  ', 10 * " 10")
+print ('Utilizando  *  para repetir a exibição strings ou numero inteiro ->  ', 10 * " L")
+
+RESULTADO =>
+
+Multiplicação *   100
+Adição +   20
+Subtração -  5
+Divisão /   5.0
+Divisão inteira retorna numero inteiro //   19
+Exponenciação **   1024
+Modulo - obtendo o resto da divisão  %   1
+Alterar a presendencia   25
+Alterar a presendencia   70
+Utilizando  +  para concatenar strings ->   Texto correto
+Utilizando  *  para repetir a exibição strings ou numero inteiro ->    10 10 10 10 10 10 10 10 10 10
+Utilizando  *  para repetir a exibição strings ou numero inteiro ->    L L L L L L L L L L
+
+=======================================
+Precedência dos Operadores Aritméticos:
+=======================================
+Assim como aprendemos na matemática, operadores têm uma certa precedência que pode ser 
+alterada usando os parênteses (como descrito na aula anterior).
+
+Abaixo, segue uma lista mais precisa de quais operadores tem maior prioridade na hora 
+de realizar contas mais complexas (de maior para menor precedência).
+
+( n + n ) - Os parênteses têm a maior precedência, contas dentro deles são realizadas
+ primeiro
+
+** - Depois vem a exponenciação
+
+* / //  % - Na sequência multiplicação, divisão, divisão inteira e módulo
+
++  - - Por fim, soma e subtração
+
+Contas com operadores de mesma precedência são realizadas da esquerda para a direita.
+
+Observação: existem muito mais operadores do que estes em Python e todos eles também 
+têm precedência, você pode ver a 
+lista completa em https://docs.python.org/3/reference/expressions.html#operator-precedence 
+(sempre utilize a documentação oficial como reforço caso necessário).
+
+Caso tenha dúvidas, faça testes com números. 
+Por exemplo:
+
+Olhe para essa conta e tente decifrar como chegar no resultado: 2 + 5 * 3 ** 2 - (23.5 + 23.5) 
+(o resultado é 0.0). Para isso você precisa realizar as contas com maior precedência primeiro
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+# aula6_variaveis.py
+# Variaveis
+#
+# Iniciar com letra, pode conter numeros, separa _ , letras minusculas
+
+nome = 'Luiz'   # operador de atribuição
+print(nome)
+print (nome, type(nome))
+
+nome = 'Luiz Antonio de Souza' # string
+idade = 32  # int
+altura = 1.80  # float
+e_maior = idade > 18   # bool
+peso = 80
+imc = peso /(altura ** 2)    #  peso divido por altura ao quadro exponenciação 2
+
+print('Nome do cliente    : ', nome)
+print('Informe sua Idade  : ', idade)
+print('Informe sua altura : ', altura)
+print('E maior de idade   : ', e_maior)
+print( nome, 'tem', idade, 'de idade e seu IMC é', imc)
+
+RESULTADO=>
+
+Luiz
+Luiz <class 'str'>
+
+Nome do cliente    :  Luiz Antonio de Souza
+Informe sua Idade  :  32
+Informe sua altura :  1.8
+E maior de idade   :  True
+Luiz Antonio de Souza tem 32 de idade e seu IMC é 24.691358024691358
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+
+# aula7_formatacao_strings.py
+# introdução de formatação de strings
+
+nome = 'Luiz Antonio de Souza' # string
+idade = 32  # int
+altura = 1.80  # float
+peso = 80
+imc = peso /(altura ** 2)    #  peso divido por altura ao quadro exponenciação 2
+
+# formatação não padrão em python
+print( nome, 'tem', idade, 'de idade e seu IMC é', imc)
+
+# formatação de strings para melhor leitura e padrão python
+print(f'{nome} tem {idade}, anos de idade e seu IMC é {imc:.2f}')   # :.2f  formatar com duas 
+casas decimais
+
+# outro tipo de formatação  em python
+print('{} tem {}, anos de idade e seu IMC é {:.2f}'.format(nome, idade, imc))
+
+# outro tipo de formatação  em python
+print('{n} tem {i}, anos de idade e seu IMC é {c:.2f}'.format(n=nome, i=idade, c=imc))
+
+RESULTADO=>
+
+Luiz Antonio de Souza tem 32 de idade e seu IMC é 24.691358024691358
+Luiz Antonio de Souza tem 32, anos de idade e seu IMC é 24.69
+Luiz Antonio de Souza tem 32, anos de idade e seu IMC é 24.69
+Luiz Antonio de Souza tem 32, anos de idade e seu IMC é 24.69
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+
+# aula8_desafio_pratico.py
+#DESAFIO:
+#========
+# Criar variaveis para nome (str), idade (int),
+# altura (float) e peso (float) de uma pessoa
+# Criar variável com ano atual (int)
+# Obter o ano de nascimento da pessoa (baseado na idade e ano atual)
+# Obter o IMC da pessoa com 2 casas decimais (peso e na altura da pessoa)
+# Exibir um texto com todos os valores na tela usado F-strings (com as chaves)
+
+nome = 'Jose Antonio dos Anjos'
+idade = 60
+peso = 105
+altura = 1.89
+ano_atual = 2021
+ano_nasc =  ano_atual - idade
+imc = peso / (altura ** 2)
+
+print('Meu nome é {} minha idade {}, o meu peso atual e de {} quilos, tenho a altura de {},'
+      ' o ano atual é {}, meu ano de nascimento é {}, meu IMC é {:.2f}'.format(nome, idade,
+      peso, altura, ano_atual, ano_nasc, imc))
+	  
+RESULTADO =>
+
+Meu nome é Jose Antonio dos Anjos minha idade 60, o meu peso atual e de 105 quilos,
+tenho a altura de 1.89, o ano atual é 2021, meu ano de nascimento é 1961, meu IMC é 29.39
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+
+=======================================================================================
+
+
+
+# aula9_input_entrada_de_dados.py
+# aula10_if_elif_else_booleans.py
+# Entrada de dados de  Input
+
+nome = input(' Qual o seu nome? ')
+idade = input (' Qual sua idade: ')
+ano_nasc = 2021-int(idade)
+
+print()
+print(f' O usuário digitou {nome}, e o tipo da variavél é '
+      f'{type(nome)}')
+print()
+print(f'{nome} tem {idade} anos.')
+print(f'{nome} nasceu no ano de {ano_nasc}.')
+print()
+
+numero_1 = input(' Digite um número : ')
+numero_2 = input(' Digite outro número : ')
+print(numero_1 + numero_2)                   # resultando concaternando  124+124  -> 124124
+print(int(numero_1) + int(numero_2))         # resultando na adição de dois numero inteiros 248
+
+RESULTADO =>
+
+ Qual o seu nome? José Antônio dos Anjos
+ Qual sua idade: 60
+
+ O usuário digitou José Antônio dos Anjos, e o tipo da variavél é <class 'str'>
+
+José Antônio dos Anjos tem 60 anos.
+José Antônio dos Anjos nasceu no ano de 1961.
+
+Digite um número : 124
+Digite outro número : 124
+124124
+248
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+
+# aula10_if_elif_else_booleans.py
+# condições  IF, ELIF e ELSE + Booleans
+
+# nesta condição que estamos testando bool sera apenas executada se for verdadeiro!
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+print()
+if False:                                
+    print("Check da primeira linha é Verdadeiro !")
+    print("Olá")
+elif False:
+    print("Check da segunda linha é Verdadeiro !")
+    print(22+22)
+elif True:
+    print("Check da terceira linha é Verdadeiro !")
+    nome= input("Qual e o seu nome :")
+    print(f'Seu nome é "{nome}')
+    print()
+else:
+    print("Check  NÃO E VERDADEIRO...")
+    print()
+
+RESULTADO=>
+
+Check da terceira linha é Verdadeiro !
+Qual e o seu nome :José Antônio dos Anjos
+Seu nome é "José Antônio dos Anjos
+
+(venv) PS C:\Server\data\htdocs\projetos_dev> 
+
+
+=======================================================================================
+
+# AULA 11 aula11_op_relacionais_if_elif_else.PY
+# Operadores relacionais 
+# == > >=  < <= !=
+
+num_1 = 2
+num_2 = '2'
+expressao = (f' num_1=[2] == num_2=["2"] ->',  num_1 == num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+num_1 = 2
+num_2 = 2
+expressao = (f' num_1=[2] == num_2=[2] ->',  num_1 == num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+
+num_1 = 2
+num_2 = 3
+expressao = (f' num_1=[2] > num_2=[3] ->',  num_1 >= num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+num_1 = 3
+num_2 = 3
+expressao = (f' num_1=[3] => num_2=[3] ->',  num_1 >= num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+num_1 = 3
+num_2 = 2
+expressao = (f' num_1=[3] < num_2=[2] ->',  num_1 < num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+num_1 = 3
+num_2 = 3
+expressao = (f' num_1=[3] <= num_2=[3] ->',  num_1 <= num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+num_1 = 3
+num_2 = 4
+expressao = (f' num_1=[3] != num_2=[4] ->',  num_1 != num_2, "num_1 =>", type(num_1), "num_2=>", type(num_2))
+print(expressao)
+print()
+
+nome = input(' Qual o seu nome ? : ')
+idade = input(' Qual a sua idade? : ')
+
+#limite para pegar emprestimo
+idade_menor = 18
+idade_maior = 69 # limite não pode pegar emprestimo
+idade = int(idade)
+
+if idade >= idade_menor and idade <= idade_maior:
+    print(f'{nome} você pode pegar o empréstimo.') 
+else:
+    print(f'{nome} **NÃO** pode pegar o empréstimo.')
+    
+
+RESULTADO=>
+
+(' num_1=[2] == num_2=["2"] ->', False, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'str'>)
+
+(' num_1=[2] == num_2=[2] ->', True, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'int'>)
+
+(' num_1=[2] > num_2=[3] ->', False, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'int'>)
+
+(' num_1=[3] => num_2=[3] ->', True, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'int'>)
+
+(' num_1=[3] < num_2=[2] ->', False, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'int'>)
+
+(' num_1=[3] <= num_2=[3] ->', True, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'int'>)
+
+(' num_1=[3] != num_2=[4] ->', True, 'num_1 =>', <class 'int'>, 'num_2=>', <class 'int'>)
+
+ Qual o seu nome ? : José Antônio dos Anjos
+ Qual a sua idade? : 59
+ José Antônio dos Anjos você pode pegar o empréstimo.
+
+=======================================================================================
+
+
+#  aula26_ len_quantidade_caracteres.py
+#  len - Quantidade de caracteres
+
+usuario = input('Digite seu Usuário: ')
+print()
+sexo= input('Digite seu sexo: ')
+qtd_caracteres = len(usuario)
+
+print()
+print(usuario, qtd_caracteres, type(qtd_caracteres))
+print()
+if qtd_caracteres < 6:
+    print('Você precisa digitar pelo meno 6 caracteres')
+else:
+    print('Voce foi cadastrado no sistema')
+    print()
+print(f'A quantidade total de caracteres digitados foi {len(usuario) + len(sexo)}')
+
+RESULTADO=>
+
+Digite seu Usuário: José Antonio dos Anjos
+
+Digite seu sexo: masculino
+
+José Antonio dos Anjos 22 <class 'int'>
+
+Voce foi cadastrado no sistema
+
+A quantidade total de caracteres digitados foi 31
+
+=======================================================================================
+
+# aula27_1-documentacao_uteis_e_funcoes.py
+# 27 Aula teorica de Documentação e funções built-in úteis
+
+
+num_1= input('digite um número: ')
+num_2= input('digite outro número: ')
+
+# isnumeric()  isdigit()  isdecimal()
+# os números devem serem possitivos (12345678) *** não podem ser float, números negativos ou strings
+
+print(num_1.isnumeric())
+print(num_2.isnumeric())
+print()
+
+if num_1.isdigit() and num_2.isdigit():
+    num_1 = int(num_1)
+    num_2 = int(num_2)
+    print(num_1 +num_2)
+else:
+    print('Nãa consegui efetuar a conversão numerica para realizar o calculo.')
+	
+RESULTADO=>
+*** RESULTADO  VERDADEIRO *** não podem ser float, números negativos ou strings
+
+digite um número: 12
+digite outro número: 12
+True
+True
+
+24
+
+=======================================================================================
+
+
+# aula27_2-documentacao_uteis_e_funcoes.py
+#27-2 Aula teorica de Documentação e funções built-in úteis
+
+# definindo as seguinte funções  is_float()  is_int()  is_number()
+
+import re
+
+def is_float(val):
+    if isinstance(val, float): return True
+    if re.search(r'^\-{,1}[0-9]+\.{1}[0-9]+$', val): return True
+    return False
+
+def is_int(val):
+    if isinstance(val, int): return True
+    if re.search(r'^\-{,1}[0-9]+$', val): return True
+    return False
+
+def is_number(val):
+    return is_int(val) or is_float(val)
+
+# atividade  de calculadora abaixo:
+
+num_1= input('digite um número: ')
+num_2= input('digite outro número: ')
+
+# isnumeric()  isdigit()  isdecimal()
+# os números devem serem possitivos (12345678) *** não podem ser float, números negativos,
+
+print(num_1.isnumeric())
+print(num_2.isnumeric())
+print()
+
+if is_number(num_1) and is_number(num_2):
+    num_1 = float(num_1)
+    num_2 = float(num_2)
+    print(num_1 +num_2)
+    print()
+else:
+    print('Nãa consegui efetuar a conversão numerica para realizar o calculo.')
+    print()
+
+##---------------------------------------------
+## Muito parecido com  if  ->  try:  e except:
+##---------------------------------------------
+
+try:
+    num_1 = float(num_1)
+    num_2 = float(num_2)
+    print(num_1 +num_2)
+    print()
+except:
+    print('Nãa consegui efetuar a conversão numerica para realizar o calculo.')
+    print()
+
+
+###########
+#  USAGE  #
+###########
+
+# Float
+print(is_float('-101.0112'))  # True
+# Int
+
+print(is_int('-1010112'))  # True
+# Numbers in general (float ou int)
+
+print(is_number('-1010.112'))  # True
+# False
+
+
+RESULTADO=>
+
+digite um número: 12.1
+digite outro número: 1.1
+False
+False
+
+13.2
+
+13.2
+
+True
+True
+True
+
+=======================================================================================
+
+
+# aula28_1_Pass e Ellipis como placeholders 
+
+# exemplo
+
+valor = True
+
+if valor:
+    pass      # Pass -> dados informativo provisoriamente  para inclusão da ação de fato que sera efetuada
+else:
+    print(' Ola execução da condição do else ok..')
+    
+    
+## ou com Ellipis
+
+if valor:
+    ...      # Ellipis -> dados informativo provisoriamente  para inclusão da ação de fato que sera efetuada
+else:
+    print(' Ola execução da condição do else ok..')
+
+RESULTADO =>
+
+PS C:\Server\data\htdocs\projetos_dev> python -u "c:\Server\data\htdocs\projetos_dev\4- Python\4.1-cursopython\aula28_1_Pass e Ellipis como placeholders .py"
+>>> 
+PS C:\Server\data\htdocs\projetos_dev> python -u "c:\Server\data\htdocs\projetos_dev\4- Python\4.1-cursopython\aula28_1_Pass e Ellipis como placeholders .py"
+>>>
+
+=======================================================================================
+
+
+# aula29_30_exercicios_propostos_logica_if_elif_else
+
+# Faça um programa que peça ao usuário para digitar um número inteiro,
+# informe se este número é par ou ímpar. Caso o usuário não digite um número
+# inteiro, informe que não é um número inteiro.
+
+numero_inteiro = input('Digite um número inteiro: ')
+
+if not numero_inteiro.isdigit():
+    print('Isso não é um número inteiro')
+else:
+    numero_inteiro = int(numero_inteiro)
+
+    if not numero_inteiro % 2 == 0:
+         print(f'{numero_inteiro} é ímpar')
+    else:
+         print(f'{numero_inteiro} é par')
+412
+# Faça um programa que pergunte a hora ao usuário e, baseando-se no horário 
+# descrito, exiba a saudação apropriada. Ex. 
+# Bom dia 0-11, Boa tarde 12-17 e Boa noite 18-23.
+
+horario = input('Digite um horário (0-23): ')
+
+if horario.isdigit():
+    horario = int(horario)
+
+    if horario < 0 or horario > 23:
+        print("Horário deve estar entre 0 e 23")
+    else:
+        if horario <= 11:
+            print('Boa dia!')
+        elif horario <= 17:
+            print('Boa tarde!')
+        else:
+            print('Boa noite!')
+else:
+    print("Por favor, digite um horário entre 0 e 23.")
+
+#
+# Faça um programa que peça o primeiro nome do usuário. Se o nome tiver 4 letras ou 
+# menos escreva "Seu nome é curto"; se tiver entre 5 e 6 letras, escreva 
+# Seu nome é normal"; maior que 6 escreva "Seu nome é muito grande". 
+
+nome = input('Digite seu nome: ')
+tamanho = len(nome)
+
+if tamanho <= 4:
+    print('Seu nome é curto.')
+elif tamanho <= 6:
+    print('Seu nome é normal.')
+else:
+    print('Seu nome é muito grande.')
+
+RESULTADO =>
+
+PS C:\Server\data\htdocs\projetos_dev> python -u "c:\Server\data\htdocs\projetos_dev\4- Python\4.1-cursopython\aula29_30_exercicios_propostos_logica_if_elif_else.py"
+Digite um número inteiro: 12
+12 é par
+Digite um horário (0-23): 18
+Boa noite!       
+Digite seu nome: José
+Seu nome é curto.
+PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+# aula31_formatando_valores_com_modificadores
+
+# Formatando valores com modificadores atual
+
+# :s - Texto (strings)
+# :d - Interiors (int)
+# :f - Numeros de ponto flutuante (float) 
+# :.(NUMERO)f - Quantidade de casas decimais (float)
+# :(CARACTERE) (> ou  < ou ^) (QUANTIDADE/TIPO -s, d  ou f)
+
+# > - Esquerda
+# < - Direita
+# ^ - Centro
+
+num_1 = 10
+num_2 = 3
+divisao = num_1 / num_2
+print('Divisao de num_1 (10) por num_2 (3) ->>> ', divisao)
+print( "Divisão com format (:.2f)  ->>> " '{:.2f}'.format(divisao) )
+
+nome = 'José Antõnio'
+num_int = 12345
+num_fl = 1281567
+num_9 = 999
+print("Formatando com opção format f (nome:s) string ->>> " f'{nome:s}')
+
+print("Formatando com opção format f (num_int:d) numeros inteiros ->>> " f'{num_int:d}')
+
+print("Formatando com opção format f (num_fl:.2f) num_fl = 1281567  sera exibido com 2 casa decimais ->>> " f'{num_fl:.2f}')
+
+print("Formatando com opção format f (num_9:0>10) sera exibido com zeros a esquerda juntamente num_9 = 999->>> " f'{num_9:0>10}')
+
+print("Formatando com opção format f (num_9:0<10) sera exibido com zeros a direita juntamente num_9 = 999->>> " f'{num_9:0<10}')
+
+print("Formatando com opção format f (num_9:0^10) sera exibido com zeros centralizando num_9 = 999->>> " f'{num_9:0^10}')
+
+print("Formatando com opção format f (nome:#^50) sera exibido com 50 hashtag centralizando o conteudo da variavel nome ->>> " f'{nome:#^50}')
+
+RESULTADO => 
+
+PS C:\Server\data\htdocs\projetos_dev> python -u "c:\Server\data\htdocs\projetos_dev\4- Python\4.1-cursopython\aula31_formatando_valores_com_modificadores.py"
+Divisao de num_1 (10) por num_2 (3) ->>>  3.3333333333333335
+Divisão com format (:.2f)  ->>> 3.33
+Formatando com opção format f (nome:s) string ->>> José Antõnio
+Formatando com opção format f (num_int:d) numeros inteiros ->>> 12345
+Formatando com opção format f (num_fl:.2f) num_fl = 1281567  sera exibido com 2 casa decimais ->>> 1281567.00
+Formatando com opção format f (num_9:0>10) sera exibido com zeros a esquerda juntamente num_9 = 999->>> 0000000999
+Formatando com opção format f (num_9:0<10) sera exibido com zeros a direita juntamente num_9 = 999->>> 9990000000
+Formatando com opção format f (num_9:0^10) sera exibido com zeros centralizando num_9 = 999->>> 0009990000
+Formatando com opção format f (nome:#^50) sera exibido com 50 hashtag centralizando o conteudo da variavel nome ->>> ###################José Antõnio###################
+PS C:\Server\data\htdocs\projetos_dev>
+
+=======================================================================================
+
+
+
+# aula32_indices_e_fatiamento_strings_python.py
+
+# * Manipulando strings 
+# * String indices
+# * Fatiamento de strings [inicio:fim:passo]
+# Funções built-in len, abs, type, print, etc ...
+# Essas funções podem ser usadas diretamente em cada tipo.
+
+# Voce pode conferir  tudo isso em:
+# https://docs.python.org/3/library/stdtypes.html  (tipos built-in)
+# https://docs.python.org/3/library/functions.html (funções built-in)
+
+# 'modo positivo Python s2' contem [012345678]  = tabela de indice (+)
+# 'modo negativo Python s2' contem [987654321]  = tabela de indice (-)      
+texto = 'Python s2'
+
+print('(modo positivo Python s2) contem [012345678]  = tabela de indice (+)')
+print('Fatiamento  do indice positivo na posição [2] da variavel texto (Py [t] hon s2) --->>>', texto[2])
+print('Fatiamento  do indice positivo na posição [8] da variavel texto (Python s [2] ) --->>>', texto[8])
+
+print()
+url = 'www.google.com.br/'
+print('O conteudo de url ->>> ', url)
+print('(modo negativo de (www.google.com.br/) contem [181716151413121110987654321]  = tabela de indice (-)')
+print('Fatiamento do indice negativo a posição [:-1] da variavel url = (www.google.com.br [ / ]) --->>> ', url[:-1])
+print('Fatiamento do indice negativo na posição [-18:-15] da variavel url = ( [ www. ]google.com.br/) --->>> ', url[-18:-15])
+print('Fatiamento do indice positivo na posição [4:18] da variavel url = (www.[ google.com.br/ ]) --->>> ', url[4:18])
+print()
+print('Fução len(url) para informar quantos carater tem na variavel url = (www.google.com.br/) --->>> ', len(url))
+print('Fução len(url) para informar quantos carater tem na variavel url = (www.google.com.br/) --->>> ', len(url))
+print('Imprima o conteudo len(url) na vertical --->>> ', len(url))
+for letra in url:
+    print(letra)
+
+
+RESULTADO =>
+
+PS C:\Server\data\htdocs\projetos_dev> python -u "c:\Server\data\htdocs\projetos_dev\4- Python\4.1-cursopython\aula32_indices_e_fatiamento_strings_python.py"
+(modo positivo Python s2) contem [012345678]  = tabela de indice (+)
+Fatiamento  do indice positivo na posição [2] da variavel texto (Py [t] hon s2) --->>> t
+Fatiamento  do indice positivo na posição [8] da variavel texto (Python s [2] ) --->>> 2
+
+O conteudo de url ->>>  www.google.com.br/
+(modo negativo de (www.google.com.br/) contem [181716151413121110987654321]  = tabela de indice (-)
+Fatiamento do indice negativo a posição [:-1] da variavel url = (www.google.com.br [ / ]) --->>>  www.google.com.br
+Fatiamento do indice negativo na posição [-18:-15] da variavel url = ( [ www. ]google.com.br/) --->>>  www
+Fatiamento do indice positivo na posição [4:18] da variavel url = (www.[ google.com.br/ ]) --->>>  google.com.br/  
+
+Fução len(url) para informar quantos carater tem na variavel url = (www.google.com.br/) --->>>  18
+Fução len(url) para informar quantos carater tem na variavel url = (www.google.com.br/) --->>>  18
+Imprima o conteudo len(url) na vertical --->>>  18
+w
+w
+w
+.
+g
+o
+o
+g
+l
+e
+.
+c
+o
+m
+.
+b
+r
+/
+PS C:\Server\data\htdocs\projetos_dev> 
+
+=======================================================================================
+
+
+

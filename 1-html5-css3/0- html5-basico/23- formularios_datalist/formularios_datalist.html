@@ -1,0 +1,136 @@
+!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de HTML5 - Aula 23 - Formulários (Datalist)</title>
+</head>
+
+<body>
+    <h1>Curso de HTML5 - Aula 23 - Formulários (Datalist)</h1>
+
+    <!--  ira dar um erro ex. para omitir os dados da senha com POST -->
+    <form action="cadastro.php" method="POST">
+
+        <fieldset>
+
+            Nome: <br>
+            <!--  utilizando maxlength limite digitação de carcteres  -->
+            <input type="text" name="nome" required autofocus maxlength="10"> <br><br>
+
+            Senha:<br>
+            <!--  utilizando required e autofocus para exigir o preenchimento do campo -->
+            <input type="password" name="senha" required autofocus><br>
+            <br>
+
+            Email:<br>
+            <!-- com aa opção type email e required exigir email valido e o preenchiemnto do campo  
+                com opção autocomplete busca os email existentes placeholder informado a digitação do email-->
+            <input type="email" name="email" autocomplete="on" placeholder="digite seuemail@gmail.com" required><br>
+            <br>
+
+            <!-- atributo que executar localização de um arquivo -->
+            Imagem:<br>
+            <input type="file" name="imagem"> <br><br>
+
+            <!-- atributo date e min data e  max data -->
+            Data:<br>
+            <input type="date" name="data" min="2000-12-31" max="2015-12-31" -> <br><br>
+
+            <!-- argumento que cria um combo de text e um botao -->
+            Mensagem:<br>
+            <textarea name="mensagem" rows="5" cols="30"> </textarea> <br><br>
+            <button type="button">Clique-me</button><br><br>
+
+            <!-- utilizando atributo select com optgroup e option -->
+            Escolha seu tipo e modelo de veiculo:<br>
+            <select name="veiculo">
+                <optgroup label="Carros">
+                    <option value="Corsa sedan">Corsa Sedan</option>
+                    <option value="Opala ">Opala</option>
+                    <option value="Corcel II ">Corcel II</option>
+                </optgroup>
+                <optgroup label="Motos">
+                    <option value="Amazonas 1000">Amazonas 1000</option>
+                    <option value="CG 150">CG 150</option>
+                    <option value="CG Falcon">CG Falcon</option>
+                </optgroup>
+            </select>
+            <br><br>
+
+            <!-- utilizando atributo input datalist -->
+            Escolha um curso:<br>
+            <input name="curso" list="lista-cursos">
+            <datalist id="lista-cursos">
+                <option value="HTML5">
+                <option value="CSS">
+                <option value="C++">
+                <option value="JAVA">
+            </datalist>
+            <br><br>
+
+            <!-- atributo de hora -->
+            Hora:<br>
+            <input type="time" name="hora"> <br><br>
+
+            <!-- atributo de mes e ano -->
+            Mês e anos::<br>
+            <input type="month" name="mes-ano"> <br><br>
+
+            <!-- atributo semana -->
+            Semana:<br>
+            <input type="week" name="semana"> <br><br>
+
+            <!-- atributo data e hora -->
+            Data e hora:<br>
+            <input type="datetime-local" name="data-e-hora"> <br><br>
+
+            <!-- atributo utilizado para informar dados especifico como parametro -->
+            <input type="hidden" name="id"><br><br>
+
+            <!-- atributo especifico apra informar uma url -->
+            URL:<br>
+            <input type="url" name="site"><br><br>
+
+            <!-- atributo de pesquisa  -->
+            Search:<br>
+            <input type="search" name="search"><br><br>
+
+            <!-- atributo para ser utilizado telefone -->
+            Telefone:<br>
+            <input type="tel" name="telefone"> <br> <br>
+
+            <!-- com type radio apenas pode ser escolhido uma opção -->
+            <input type="radio" name="time" value="Vasco">Vasco <br>
+            <input type="radio" name="time" value="Corithians">Corithians <br>
+            <input type="radio" name="time" value="São Paulo">São Paulo <br>
+            <input type="radio" name="time" value="Palmeiras">Palmeiras <br>
+            <br>
+
+            Cores:<br>
+            <!-- com type checkbox podemos escolher uma, duas ou todas opções -->
+            <input type="checkbox" name="cores" value="vermelho"> Vermelho<br>
+            <input type="checkbox" name="cores" value="amarelo"> Amarelo<br>
+            <input type="checkbox" name="cores" value="verde"> Verde<br>
+
+            Quantidade:<br>
+            <!-- com os atributo min e max voce limita entre 0 a 500  e arguimento step 10  lanaçamento de 10 e 10 com a seta para cima -->
+            <input type="number" name="quantidade" min="0" max="500" step="10"><br>
+            <br>
+
+            <!-- com o atributo range neste caso apenas para exibição do atributo range -->
+            <input type="range" name="quantidade"><br>
+            <br>
+
+            Cor:<br>
+            <input type="color" name="cor"><br>
+            <br>
+
+            <input type="submit" name="btn-enviar" value="Enviar">
+
+        </fieldset>
+</body>
+
+</html>

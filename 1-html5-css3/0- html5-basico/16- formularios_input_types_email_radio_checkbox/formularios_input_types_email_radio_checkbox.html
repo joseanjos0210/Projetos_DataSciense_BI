@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de HTML5 - Aula 16 - Formulários (Input Types: Email, Radio, Checkbox)</title>
+</head>
+
+<body>
+    <h1>Curso de HTML5 - Aula 16 - Formulários (Input Types: Email, Radio, Checkbox)</h1>
+
+    <!--  ira dar um erro ex. para omitir os dados da senha com POST -->
+    <form action="cadastro.php" method="POST">
+
+        <fieldset>
+            Nome: <br>
+            <!--  utilizando atributo maxlength limite digitação de carcteres  -->
+            <input type="text" name="nome" required autofocus maxlength="10"> <br><br>
+            Senha:<br>
+            <!--  utilizando atributo required e autofocus para exigir o preenchimento do campo -->
+            <input type="password" name="senha" required autofocus><br>
+            <br>
+            Email:<br>
+            <!-- com atributo a opção type email e required exigir email valido e o preenchiemnto do campo -->
+            <input type="email" name="email" required><br>
+            <br>
+            <!-- com atributo type radio apenas pode ser escolhido uma opção -->
+            <input type="radio" name="time" value="Vasco">Vasco <br>
+            <input type="radio" name="time" value="Corithians">Corithians <br>
+            <input type="radio" name="time" value="São Paulo">São Paulo <br>
+            <input type="radio" name="time" value="Palmeiras">Palmeiras <br>
+            <br>
+            Cores:<br>
+            <!-- com atributo type checkbox podemos escolher uma, duas ou todas opções -->
+            <input type="checkbox" name="cores" value="vermelho"> Vermelho<br>
+            <input type="checkbox" name="cores" value="amarelo"> Amarelo<br>
+            <input type="checkbox" name="cores" value="verde"> Verde<br>
+            <br>
+            <input type="submit" name="btn-enviar" value="Enviar">
+
+        </fieldset>
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+liberar FW PARA ACESSO REMOTO SGQL ->https://docs.microsoft.com/pt-br/sql/sql-server/install/configure-the-windows-firewall-to-allow-sql-server-access?view=sql-server-ver15&viewFallbackFrom=sql-server-ver15%20Attachments%20Add%20or%20remove%20attachments%20Recent%20Activity%20This%20week%20Sarah%20Kaufman%20(Virtuosity)%20made%20edits%20%2011%20minutes%20ago%20Sarah%20Kaufman%20(Virtuosity)%20created%20%22Configure%20the%20Windows%20Firewall%20to%20Allow%20SQL%20Server%20Access%22%20%2024%20minutes%20ago%20Type%20List%20item%20Modified%20A%20few%20seconds%20ago%20Path%20SQL%20Server%20Release%20ServicesSQL18%20FWLinksConfigure%20the%20Windows%20Firewall%20to%20Allow%20SQL%20Server%20Access%20Configure%20the%20Windows%20Firewall%20to%20Allow%20SQL%20Server%20Access
+
+=============================================================================================================================
+
+CREATE DATABASE AdventureWorks2012
+ON (FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\AdventureWorks2012_Data.mdf')
+FOR ATTACH_REBUILD_LOG
+
+------------------------------------
+
+O surgimento dos bancos de dados relacionais revolucionou, sem sombra nenhuma de dúvidas, a forma como as organizações controlam suas atividades cotidianas. Este tipo de tecnologia viabilizou uma série de análises até então impensáveis, bem como permitiu a manipulação de grandes volumes de dados.
+
+Do ponto de vista estrutural, um banco de dados relacional é definido como um repositório para armazenamento de informações que estão relacionadas de alguma forma. Tais dados estão normalmente agrupados logicamente sob a forma de tabelas, com cada uma destas sendo constituída por um conjunto de colunas (campos) e registros (linhas).
+
+Através de instruções SQL (sigla do inglês "Structured Query Language") é possível a realização de operações consultando, inserindo, atualizando ou excluindo registros de uma tabela (comandos deste tipo fazem parte de um subconjunto de SQL conhecido como DML, sigla de "Data Manipulation Language").
+
+Existem atualmente diversos produtos (proprietários ou de uso gratuito) voltados ao gerenciamento de bancos de dados. Além do SQL Server da Microsoft, podem ser mencionados como sistemas comercializados de grande aceitação o Oracle e o IBM DB2; já o Firebird, o PostgreSQL e o MySQL representam exemplos de soluções gratuitas que desfrutam de uma boa popularidade entre a comunidade de TI.
+
+Para aqueles que estão habituados com o dia-a-dia da área de desenvolvimento de software ou, até mesmo, iniciando na mesma e tendo seus primeiros contatos com os bancos relacionais, é extremamente comum a necessidade de se utilizarem base de dados para a realização de testes. Na prática, isto costuma implicar na criação de um banco em que constarão tabelas, dados e ainda, outros tipos de estruturas como stored procedures, triggers e functions.
+
+Considerando o SQL Server, por default este gerenciador não gera nenhuma base de testes ao ser instalado. Contudo, a equipe responsável pela evolução deste produto disponibiliza um banco de dados conhecido como Adventure Works, o qual já conta com uma estrutura em conformidade com as boas práticas de desenvolvimento, assim como estão inseridos no mesmo dados que possibilitam a execução dos mais variados tipos de testes.
+
+Estão disponíveis algumas variantes do banco Adventure Works, sendo possível citar neste caso as seguintes versões:
+
+AdventureWorks2012 Data File: banco de dados relacional, com toda uma estrutura e informações apropriadas para a realização de testes;
+AdventureWorksDW2012 Data File: base que pode ser utilizada em aplicações de BI (sigla em inglês para “Business Intelligence”; termo também conhecido como “Inteligência Empresarial”). Conceitualmente falando, BI pode ser definido como um conjunto de técnicas que envolvem a coleta, o processamento e a geração de informações a partir de dados de operações cotidianas de uma organização. Este procedimento busca, assim, prover análises que auxiliem profissionais de gestão em atividades relacionadas à tomada de decisões.
+O objetivo deste artigo é demonstrar como o banco “AdventureWorks2012 Data File” pode ser habilitado para uso em um servidor SQL Server 2012. Para isto, estaremos efetuando o download desta base de dados e, consequentemente, habilitando a mesma dentro de uma instância do SQL Server.
+
+Implantando o banco de dados Adventure Works no SQL Server
+Acessar primeiramente a página através da qual é possível efetuar o download do arquivo referente ao banco de dados Adventure Works. Essa base de exemplo encontra-se hospedada no site CodePlex, portal este que contempla diversas soluções open source construídas por meio de tecnologias da Microsoft.
+
+O link para o projeto reponsável pelo banco Adventure Works é o seguinte:
+
+http://msftdbprodsamples.codeplex.com/
+
+Acessando este endereço, será apresentada uma página como a que consta na Figura 1.
+
+Página para download do banco Adventure Works no site CodePlex
+Figura 1: Página para download do banco Adventure Works no site CodePlex
+
+Acionar então a opção “SQL Server 2012 OLTP”. Aparecerá neste momento uma página como a que consta na Figura 2. Efetuar o download do arquivo “AdventureWorks2012 Data File”, clicando para isto sobre o link de mesmo nome.
+
+O ideal é que o arquivo de nome “AdventureWorks2012_Data.mdf” seja salvo em um diretório do servidor SQL Server que estará sendo utilizado. No procedimento aqui demonstrado, utilizou-se como base o seguinte o caminho “C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\” (Figura 3).
+
+Efetuando o download do banco de dados AdventureWorks2012
+Figura 2: Efetuando o download do banco de dados AdventureWorks2012
+
+Arquivo AdventureWorks2012_Data.mdf já baixado
+Figura 3: Arquivo AdventureWorks2012_Data.mdf já baixado
+
+Será necessário agora acionar o SQL Server Management Studio, conectando-se então ao servidor de banco de dados em que ficará a base Adventure Works. Uma vez que tal conexão tenha sido estabelecida, executar o script que consta na Listagem 1, de maneira a se registrar o arquivo que corresponde ao banco de dados AdventureWorks2012.
+
+Com a instrução “CREATE DATABASE” é possível não apenas a criação de novos bancos de dados, como também registrar arquivos de dados previamente criados em um servidor SQL Server. Neste último caso, o parâmetro “FILENAME” indica o local em que esta base se encontra; já a cláusula “FOR ATTACH_REBUILD_LOG” é responsável por gerar um arquivo de log que estará associado ao banco de dados que se está configurando.
+
+Geralmente, bases de dados do SQL contam com um arquivo de dados (extensão .mdf) e outro de log (extensão .ldf). No caso desta estrutura de log, este arquivo mantém um registro de todas as operações que foram efetuadas na base de dados, servindo inclusive em operações que envolvam a recuperação de informações mediante algum procedimento que tenha ocorrido de maneira inapropriada.
+
+OBSERVAÇÃO: poderão ocorrer alguns alertas durante a execução das instruções indicadas na Listagem 1, porém o comum é que o banco de dados Adventure Works seja registrado normalmente apesar disto.
+
+Listagem 1: Script para registrar o arquivo AdventureWorks2012_Data.mdf
+
+CREATE DATABASE AdventureWorks2012
+ON (FILENAME = 'C:\Program Files\Microsoft SQL Server\MSSQL11.MSSQLSERVER\MSSQL\DATA\AdventureWorks2012_Data.mdf')
+FOR ATTACH_REBUILD_LOG
+Concluída a execução do script correspondente à Listagem 1, é possível constatar que a base de dados AdventureWorks2012 foi devidamente registrada (Figura 4).
+
+Base AdventureWorks2012 já registrada
+Figura 4: Base AdventureWorks2012 já registrada
+
+A base Adventure Works conta com informações sobre funcionários de uma organização, um catálogo de produtos, compras e vendas. Trata-se de um conjunto de recursos bastante útil não apenas para aqueles que estão iniciando seus estudos em bancos de dados relacionais, assim como para desenvolvedores que precisam de um repositório de informações para a condução de testes.
+
+Espero que conteúdo aqui apresentado possa ser útil em seu dia-a-dia. Até uma próxima oportunidade!

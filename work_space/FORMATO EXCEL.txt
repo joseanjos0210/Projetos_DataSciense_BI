@@ -1,0 +1,76 @@
+
+	#########################################
+	### ATENÇÃO  QUANDO FORMATAR PLANILHA ###
+	#########################################
+
+	FORMATAR COLUNA VALOR ---->> COMO NUMERO  SEM CASA DECIMAL
+
+	FORMATAR DATA COMO PERSONALIZADO  NO FORMATO ----->>  YYYY-MM-DD 
+	
+		select count(*) from [tabela]
+
+		delete from [tabela]
+	
+
+-----------------------------------------------------------------------------------------
+
+PROCESSO DE CRIAÇÃO DE PACOTES:
+##############################
+
+
+0º Criar um  Database no  Microsoft SQL Server Management Studio
+
+----------------------------------------------------------
+
+1º No Visual Studio 2017 -> Na Aba Fluxo de Controle -> Selecionar Data Flow Task  e click dentro o icone Data Flow Task
+
+----------------------------------------------------------
+
+2º 	No Visual Studio 2017 -> Dentro do Data Flow Task -> click com botão direito do mouse 
+	no quadro de Gerenc.Conexões -> selecione Flat File Conection ( Nova conexão de arquivo simples )
+	
+	2.1	- Informe nome da nova conexão  -> Informe o caminho completo onde esta o arquivo.csv e procurar o mesmo e selecione;
+	
+	2.2 - No quadro dos icones Descrição Colunas  e verifique no final do arquivo coluna e  linha se existe campo ou 
+		  linha em branco e analise formato data e valor click enter;
+		
+	2.3 - No quadro dos icones Descrição Avançado -> selecione todos os campos  e altere o tamanho da coluna  1000;
+	
+	2.4 - Selecione o Icone Flat File Source e de um click no mesmo para configurar a conexão realizada
+	
+----------------------------------------------------------
+
+3º 	No Visual Studio 2017 -> click no gerenciadores de  conexões com botão direito do mouse 
+	no quadro de Gerenc.Conexões -> selecione OLE DB Destination ( Nova conexão OLE DB )
+	
+	3.1 - Selecione conexões de dados  xxxxx.sa ou crie -> nome do servidor informe [.]  e selecione o DB desejado
+		  ->  [RAW_20210705_Clientes_Banco] 
+		  ->  [IdCliente]  int identity(1,1),  
+		  
+	3.2 - Selecione no gerenciador de coneões -> Mapeamentos e analise se os apontamento relacionados estão corretos 
+	
+	3.3 - Renomeie pacote com o nome 20210705_Clientes_Banco ->  renomeie Flat File Source -> 20210705_Clientes_Banco
+	
+	3.4 - Confire ambiente de  segurança do pacote para conter senha ->  EncryptSensitiveWithPassword -> logo acima
+		  defina a senha de execução do pacote
+
+	3.5 - Salve toda a configuração do pacote;
+	
+	3.6 - Implatar (Deploy) informe nome do servidor [.] , conecte com user windows-> procurar caminho no caso DEvDS 
+		  ambiente de devDS -> novo informe o nome do  pasote e descrição do pacote para que finalidade, -> next
+		  e implantar (Deploy)
+		  
+
+4º 	Execute o pacote  e valide se foi com sucesso va Database no  Microsoft SQL Server Management Studio e verificar
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+	
+	
+	
+)
+  

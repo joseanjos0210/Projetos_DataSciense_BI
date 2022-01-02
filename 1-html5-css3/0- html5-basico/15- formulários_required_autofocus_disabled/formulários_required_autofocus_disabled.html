@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso de HTML5 - Aula 15 - Formulários - (Required , Autofocus, Disabled)</title>
+</head>
+
+<body>
+    <h1>Curso de HTML5 - Aula 15 - Formulários - (Required , Autofocus, Disabled)</h1>
+
+    <!--  ira dar um erro ex. para omitir os dados da senha com POST -->
+
+    <form action="cadastro.php" method="POST">
+
+        <fieldset>
+            Nome: <br>
+            <!--  utilizando atributo required e autofocus par aexigir o preenchimento do campo -->
+            <input type="text" name="nome" required autofocus> <br><br>
+            Senha:<br>
+            <!--  utilizando atributo required e autofocus par aexigir o preenchimento do campo -->
+            <input type="password" name="senha" required autofocus><br>
+            <br>
+            <input type="submit" name="btn-enviar" value="Enviar">
+            <br>
+        </fieldset>
+
+</body>
+
+</html>
